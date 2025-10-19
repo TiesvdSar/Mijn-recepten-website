@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mijn recepten opslag</title>
+    <link rel="stylesheet" href="styles/main_style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🍽 Mijn recepten collectie</h1>
+            <p>Deze recepten zijn van mijn vrienden, familie of van mij zelf om ze te delen met mensen en ze ergens op te slaan.</p>
+        </header>
+        
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Zoek voor recepten...">
+        </div>
+        
+        <div class="filter-controls">
+            <div class="filter-section">
+                <label for="categoryFilter">Categorie:</label>
+                <select id="categoryFilter" onchange="applyFilters()">
+                    <option value="Alle Categoriën">Alle Categoriën</option>
+                </select>
+            </div>
+            
+            <div class="filter-section">
+                <label for="timeFilter">Max Cook Time:</label>
+                <select id="timeFilter" onchange="applyFilters()">
+                    <option value="all">Any Time</option>
+                    <option value="15">15 min or less</option>
+                    <option value="30">30 min or less</option>
+                    <option value="60">1 hour or less</option>
+                </select>
+            </div>
+            
+            <div class="filter-section">
+                <label for="servingsFilter">Servings:</label>
+                <select id="servingsFilter" onchange="applyFilters()">
+                    <option value="all">Any Amount</option>
+                    <option value="1-2">1-2 people</option>
+                    <option value="3-4">3-4 people</option>
+                    <option value="5+">5+ people</option>
+                </select>
+            </div>
+            
+            <button class="clear-filters-btn" onclick="clearFilters()">Clear Filters</button>
+            <button class="random-btn" onclick="openRandomRecipe()">🎲 Random Recipe</button>
+        </div>
+        
+        <div class="filters" id="filters"></div>
+        
+        <div class="recipes-grid" id="recipesGrid"></div>
+        
+        <div class="no-results" id="noResults" style="display: none;">
+            Geen recepten gevonden, proveer iets anders.
+        </div>
+    </div>
+    
+    <div class="modal" id="recipeModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <img class="modal-image" id="modalImage" src="" alt="">
+            <div class="modal-body">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <div class="modal-meta" id="modalMeta"></div>
+                <p id="modalDescription"></p>
+                
+                <h3 class="section-title">Ingredients</h3>
+                <div class="serving-adjuster">
+                    <label>Servings:</label>
+                    <div class="serving-controls">
+                        <button class="serving-btn" id="decreaseServing" onclick="adjustServings(-1)">−</button>
+                        <span class="serving-count" id="currentServings"></span>
+                        <button class="serving-btn" id="increaseServing" onclick="adjustServings(1)">+</button>
+                    </div>
+                </div>
+                <ul class="ingredients-list" id="modalIngredients"></ul>
+                
+                <h3 class="section-title">Instructions</h3>
+                <ol class="instructions-list" id="modalInstructions"></ol>
+            </div>
+        </div>
+    </div>
+
+    <script src="recepten.js"></script>
+    
+    <script>     
+        let currentCategory = 'All';
+        let currentRecipe = null;
+        let currentServingSize = 1;
+        let currentFilters = {
+            category: 'All',
+            maxTime: 'all',
+            servings: 'all',
+            search: ''
+        };
+        
+        // Parse ingredient and scale quantity
+        function scaleIngredient(ingredient, scale) {
+            // Regular expression to find numbers (including fractions and decimals)
+            const numberRegex = /(\d+\.?\d*\/?\d*\.?\d*)/g;
+            
+            return ingredient.replace(numberRegex, function(match) {
+                let value;
+                
+                // Handle fractions like "1/2"
+                if (match.includes('/')) {
+                    const parts = match.split('/');
+                    value = parseFloat(parts[0]) / parseFloat(parts[1]);
+                } else {
+                    value = parseFloat(match);
+                }
+                
+                const scaled = value * scale;
+                
+                // Format the result nicely
+                if (scaled % 1 === 0) {
+                    return scaled.toString();
+                }
+                
+                // Check if it's close to a common fraction
+                const fractions = {
+                    0.25: '¼', 0.33: '⅓', 0.5: '½', 
+                    0.67: '⅔', 0.75: '¾'
+                };
+                
+                const whole = Math.floor(scaled);
+                const decimal = scaled - whole;
+                
+                for (let [dec, frac] of Object.entries(fractions)) {
+                    if (Math.abs(decimal - parseFloat(dec)) < 0.05) {
+                        return whole > 0 ? `${whole} ${frac}` : frac;
+                    }
+                }
+                
+                // Otherwise round to 1 decimal place
+                return scaled.toFixed(1);
+            });
+        }
+        
+        // Adjust serving size
+        function adjustServings(change) {
+            currentServingSize += change;
+            if (currentServingSize < 1) currentServingSize = 1;
+            
+            updateIngredientsDisplay();
+        }
+        
+        // Update ingredients display with scaled quantities
+        function updateIngredientsDisplay() {
+            if (!currentRecipe) return;
+            
+            const scale = currentServingSize / currentRecipe.servings;
+            const scaledServings = currentRecipe.servings * scale;
+            
+            document.getElementById('currentServings').textContent = Math.round(scaledServings);
+            document.getElementById('decreaseServing').disabled = currentServingSize <= 1;
+            
+            const ingredientsList = document.getElementById('modalIngredients');
+            ingredientsList.innerHTML = currentRecipe.ingredients.map(ing => 
+                `<li>${scaleIngredient(ing, scale)}</li>`
+            ).join('');
+        }
+        
+        // Get unique categories
+        function getCategories() {
+            const categories = new Set();
+            recipes.forEach(r => {
+                const cats = Array.isArray(r.categories) ? r.categories : (r.category ? [r.category] : []);
+                cats.forEach(cat => categories.add(cat));
+            });
+            return ['All', ...Array.from(categories).sort()];
+        }
+        
+        // Parse time string to minutes
+        function parseTimeToMinutes(timeStr) {
+            const match = timeStr.match(/(\d+)\s*min/);
+            return match ? parseInt(match[1]) : 0;
+        }
+        
+        // Apply all filters
+        function applyFilters() {
+            currentFilters.category = document.getElementById('categoryFilter').value;
+            currentFilters.maxTime = document.getElementById('timeFilter').value;
+            currentFilters.servings = document.getElementById('servingsFilter').value;
+            
+            renderRecipes();
+        }
+        
+        // Clear all filters
+        function clearFilters() {
+            currentFilters = {
+                category: 'All',
+                maxTime: 'all',
+                servings: 'all',
+                search: ''
+            };
+            
+            document.getElementById('categoryFilter').value = 'All';
+            document.getElementById('timeFilter').value = 'all';
+            document.getElementById('servingsFilter').value = 'all';
+            document.getElementById('searchInput').value = '';
+            
+            renderRecipes();
+        }
+        
+        // Get filtered recipes
+        function getFilteredRecipes() {
+            return recipes.filter(recipe => {
+                // Category filter
+                const matchesCategory = currentFilters.category === 'All' || 
+                                       recipe.categories.includes(currentFilters.category);
+                
+                // Time filter
+                let matchesTime = true;
+                if (currentFilters.maxTime !== 'all') {
+                    const totalTime = parseTimeToMinutes(recipe.prepTime) + parseTimeToMinutes(recipe.cookTime);
+                    matchesTime = totalTime <= parseInt(currentFilters.maxTime);
+                }
+                
+                // Servings filter
+                let matchesServings = true;
+                if (currentFilters.servings === '1-2') {
+                    matchesServings = recipe.servings >= 1 && recipe.servings <= 2;
+                } else if (currentFilters.servings === '3-4') {
+                    matchesServings = recipe.servings >= 3 && recipe.servings <= 4;
+                } else if (currentFilters.servings === '5+') {
+                    matchesServings = recipe.servings >= 5;
+                }
+                
+                // Search filter
+                const matchesSearch = recipe.title.toLowerCase().includes(currentFilters.search.toLowerCase()) ||
+                                     recipe.description.toLowerCase().includes(currentFilters.search.toLowerCase());
+                
+                return matchesCategory && matchesTime && matchesServings && matchesSearch;
+            });
+        }
+        
+        // Open random recipe
+        function openRandomRecipe() {
+            const filtered = getFilteredRecipes();
+            
+            if (filtered.length === 0) {
+                alert('No recipes match your current filters!');
+                return;
+            }
+            
+            const randomIndex = Math.floor(Math.random() * filtered.length);
+            const randomRecipe = filtered[randomIndex];
+            openRecipe(randomRecipe.id);
+        }
+        
+        // Render filter buttons (legacy - now hidden)
+        function renderFilters() {
+            // Category buttons are now replaced by dropdown filter
+            // This function kept for compatibility
+        }
+        
+        // Render recipe cards
+        function renderRecipes() {
+            const grid = document.getElementById('recipesGrid');
+            const noResults = document.getElementById('noResults');
+            
+            const filtered = getFilteredRecipes();
+            
+            if (filtered.length === 0) {
+                grid.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+            
+            grid.style.display = 'grid';
+            noResults.style.display = 'none';
+            
+            grid.innerHTML = filtered.map(recipe => `
+                <div class="recipe-card" onclick="openRecipe(${recipe.id})">
+                    <img class="recipe-image" src="${recipe.image}" alt="${recipe.title}">
+                    <div class="recipe-content">
+                        <h3 class="recipe-title">${recipe.title}</h3>
+                        <div class="recipe-meta">
+                            <span>⏱️ ${recipe.prepTime}</span>
+                            <span>🍳 ${recipe.cookTime}</span>
+                            <span>👥 ${recipe.servings}</span>
+                        </div>
+                        <p>${recipe.description}</p>
+                        ${ (Array.isArray(recipe.categories) ? recipe.categories : (recipe.category ? [recipe.category] : []) )
+                            .map(cat => `<span class="recipe-category">${cat}</span>`).join(' ') }
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Open recipe modal
+        function openRecipe(id) {
+            const recipe = recipes.find(r => r.id === id);
+            if (!recipe) return;
+            
+            currentRecipe = recipe;
+            currentServingSize = 1;
+            
+            document.getElementById('modalImage').src = recipe.image;
+            document.getElementById('modalTitle').textContent = recipe.title;
+            document.getElementById('modalMeta').innerHTML = `
+                <span>⏱️ Prep: ${recipe.prepTime}</span>
+                <span>🍳 Cook: ${recipe.cookTime}</span>
+                <span>👥 Servings: ${recipe.servings}</span>
+            `;
+            document.getElementById('modalDescription').textContent = recipe.description;
+            
+            updateIngredientsDisplay();
+            
+            document.getElementById('modalInstructions').innerHTML = 
+                recipe.instructions.map(inst => `<li>${inst}</li>`).join('');
+            
+            document.getElementById('recipeModal').style.display = 'block';
+        }
+        
+        // Close modal
+        function closeModal() {
+            document.getElementById('recipeModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('recipeModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+        
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            currentFilters.search = e.target.value;
+            renderRecipes();
+        });
+        
+        // Initialize
+        function init() {
+            // Populate category filter
+            const categories = getCategories();
+            const categorySelect = document.getElementById('categoryFilter');
+            categorySelect.innerHTML = categories.map(cat => 
+                `<option value="${cat}">${cat}</option>`
+            ).join('');
+            
+            renderRecipes();
+        }
+        
+        init();
+    </script>
+</body>
+</html>
