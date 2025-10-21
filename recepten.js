@@ -6,7 +6,7 @@ const recipes = [
         description: "Dit is een Hippo classic met blauwe kaas, heb alleen de bedenken nog niet kunnen vinden.",
         categories: ["Hoofdgerecht", "gehakt"],
         prepTime: "20 min",
-        cookTime: "20 min",
+        cookTime: "30 min",
         servings: 4,
         image: "",
         ingredients: [
@@ -14,37 +14,38 @@ const recipes = [
             "600 gram gehakt",
             "2 courgetten",
             "2 stopen brocolie",
+            "400 gram champignons",
+            "4 uien",
+            "4 tenen knoflook",
             "200 gram blauwe kaas",
+            "125 gram creme frache",
             "Peper, zout en chilie poeder naar smaak"
         ],
         instructions: [
-            "Bring a large pot of salted water to boil and cook spaghetti according to package directions.",
-            "While pasta cooks, cut pancetta into small cubes and fry in a large pan until crispy.",
-            "In a bowl, whisk together eggs and grated Parmesan cheese.",
-            "Drain pasta, reserving 1 cup of pasta water.",
-            "Add hot pasta to the pan with pancetta, remove from heat.",
-            "Quickly stir in egg mixture, adding pasta water gradually until creamy.",
-            "Season with black pepper and serve immediately with extra Parmesan."
+            "Snij alle groenten, ui en knoflook erg fijn.",
+            "Zet een koeken pan of het vuur en giet er wat olie in.",
+            "Fruit de ui en knoflook goed voordat je de gehakt gaar bakt.",
+            "Als de gehakt klaar is kan je alle groenten er bij gooien.",
+            "Als de groenten zacht zijn gebakken, kan de blauw kaas en de creme frache er bij.",
+            "Breng het gerecht op smaak met peper, zout en eventueel andere kruiden.",
+            "Bij het serveren: hol een half stokbrood uit en stop het eten in de stokbrood en smullen maar"
+
         ]
     },
     {
         id: 2,
-        title: "Chicken Stir-Fry",
-        description: "Quick and healthy Asian-inspired chicken with vegetables.",
-        categories: "Asian",
-        prepTime: "15 min",
-        cookTime: "10 min",
-        servings: 3,
+        title: "Shoarma wok",
+        description: "Een heel snel en makkelijk gerecht.",
+        categories: ["Aziatisch", "Snel", "Makkelijk"],
+        prepTime: "0 min",
+        cookTime: "25 min",
+        servings: 4,
         image: "",
         ingredients: [
-            "500g chicken breast, sliced",
-            "2 bell peppers, sliced",
-            "1 broccoli head, cut into florets",
-            "3 cloves garlic, minced",
-            "3 tbsp soy sauce",
-            "2 tbsp oyster sauce",
-            "1 tbsp sesame oil",
-            "2 tbsp vegetable oil"
+            "800 gram voorgesneden chinese groenten",
+            "600 gram shoarma reepjes",
+            "400 gram noedels",
+            "1 Chilli peper"
         ],
         instructions: [
             "Heat vegetable oil in a wok or large pan over high heat.",
@@ -58,7 +59,7 @@ const recipes = [
     },
     {
         id: 3,
-        title: "Chocolate Chip Cookies",
+        title: "Venkel pasta",
         description: "Soft and chewy homemade cookies loaded with chocolate chips.",
         categories: "Dessert",
         prepTime: "15 min",

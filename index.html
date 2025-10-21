@@ -26,27 +26,27 @@
             </div>
             
             <div class="filter-section">
-                <label for="timeFilter">Max Cook Time:</label>
+                <label for="timeFilter">Bereidings tijd:</label>
                 <select id="timeFilter" onchange="applyFilters()">
-                    <option value="all">Any Time</option>
-                    <option value="15">15 min or less</option>
-                    <option value="30">30 min or less</option>
-                    <option value="60">1 hour or less</option>
+                    <option value="all">Elke tijd</option>
+                    <option value="15">15 min of minder</option>
+                    <option value="30">30 min of minder</option>
+                    <option value="60">1 uur of minder</option>
                 </select>
             </div>
             
             <div class="filter-section">
-                <label for="servingsFilter">Servings:</label>
+                <label for="servingsFilter">Aantal personen:</label>
                 <select id="servingsFilter" onchange="applyFilters()">
-                    <option value="all">Any Amount</option>
-                    <option value="1-2">1-2 people</option>
-                    <option value="3-4">3-4 people</option>
-                    <option value="5+">5+ people</option>
+                    <option value="all">Elk aantal</option>
+                    <option value="1-2">1-2 mensen</option>
+                    <option value="3-4">3-4 mensen</option>
+                    <option value="5+">5+ mensen</option>
                 </select>
             </div>
             
-            <button class="clear-filters-btn" onclick="clearFilters()">Clear Filters</button>
-            <button class="random-btn" onclick="openRandomRecipe()">🎲 Random Recipe</button>
+            <button class="clear-filters-btn" onclick="clearFilters()">Filters verwijderen</button>
+            <button class="random-btn" onclick="openRandomRecipe()">🎲 Random Recept</button>
         </div>
         
         <div class="filters" id="filters"></div>
@@ -67,9 +67,9 @@
                 <div class="modal-meta" id="modalMeta"></div>
                 <p id="modalDescription"></p>
                 
-                <h3 class="section-title">Ingredients</h3>
+                <h3 class="section-title">Ingredienten</h3>
                 <div class="serving-adjuster">
-                    <label>Servings:</label>
+                    <label>Aantal:</label>
                     <div class="serving-controls">
                         <button class="serving-btn" id="decreaseServing" onclick="adjustServings(-1)">−</button>
                         <span class="serving-count" id="currentServings"></span>
@@ -78,7 +78,7 @@
                 </div>
                 <ul class="ingredients-list" id="modalIngredients"></ul>
                 
-                <h3 class="section-title">Instructions</h3>
+                <h3 class="section-title">Stappen</h3>
                 <ol class="instructions-list" id="modalInstructions"></ol>
             </div>
         </div>
@@ -171,7 +171,7 @@
                 const cats = Array.isArray(r.categories) ? r.categories : (r.category ? [r.category] : []);
                 cats.forEach(cat => categories.add(cat));
             });
-            return ['All', ...Array.from(categories).sort()];
+            return ['Alle', ...Array.from(categories).sort()];
         }
         
         // Parse time string to minutes
@@ -303,9 +303,9 @@
             document.getElementById('modalImage').src = recipe.image;
             document.getElementById('modalTitle').textContent = recipe.title;
             document.getElementById('modalMeta').innerHTML = `
-                <span>⏱️ Prep: ${recipe.prepTime}</span>
-                <span>🍳 Cook: ${recipe.cookTime}</span>
-                <span>👥 Servings: ${recipe.servings}</span>
+                <span>⏱️ Voorbereiding: ${recipe.prepTime}</span>
+                <span>🍳 Kooktijd: ${recipe.cookTime}</span>
+                <span>👥 Aantal: ${recipe.servings}</span>
             `;
             document.getElementById('modalDescription').textContent = recipe.description;
             
