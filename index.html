@@ -21,7 +21,7 @@
             <div class="filter-section">
                 <label for="categoryFilter">Categorie:</label>
                 <select id="categoryFilter" onchange="applyFilters()">
-                    <option value="Alle Categoriën">Alle Categoriën</option>
+                    <option value="Alle">Alle</option>
                 </select>
             </div>
             
@@ -66,6 +66,12 @@
                 <h2 class="modal-title" id="modalTitle"></h2>
                 <div class="modal-meta" id="modalMeta"></div>
                 <p id="modalDescription"></p>
+
+                <div class="share-buttons" style="margin:10px 0;">
+                    <button onclick="copyRecipeLink()" class="random-btn" title="Kopieer link">🔗 Kopieer link</button>
+                    <button onclick="shareOnWhatsApp()" class="clear-filters-btn" title="Deel op WhatsApp">💬 WhatsApp</button>
+                    <button onclick="shareViaEmail()" class="clear-filters-btn" title="Deel via e-mail">✉️ E-mail</button>
+                </div>
                 
                 <h3 class="section-title">Ingredienten</h3>
                 <div class="serving-adjuster">
@@ -87,11 +93,11 @@
     <script src="recepten.js"></script>
     
     <script>     
-        let currentCategory = 'All';
+        let currentCategory = 'Alle';
         let currentRecipe = null;
         let currentServingSize = 1;
         let currentFilters = {
-            category: 'All',
+            category: 'Alle',
             maxTime: 'all',
             servings: 'all',
             search: ''
@@ -192,13 +198,13 @@
         // Clear all filters
         function clearFilters() {
             currentFilters = {
-                category: 'All',
+                category: 'Alle',
                 maxTime: 'all',
                 servings: 'all',
                 search: ''
             };
             
-            document.getElementById('categoryFilter').value = 'All';
+            document.getElementById('categoryFilter').value = 'Alle';
             document.getElementById('timeFilter').value = 'all';
             document.getElementById('servingsFilter').value = 'all';
             document.getElementById('searchInput').value = '';
@@ -210,8 +216,8 @@
         function getFilteredRecipes() {
             return recipes.filter(recipe => {
                 // Category filter
-                const matchesCategory = currentFilters.category === 'All' || 
-                                       recipe.categories.includes(currentFilters.category);
+                const matchesCategory = currentFilters.category === 'Alle' ||
+                                       (Array.isArray(recipe.categories) ? recipe.categories.includes(currentFilters.category) : (recipe.category === currentFilters.category));
                 
                 // Time filter
                 let matchesTime = true;
@@ -251,6 +257,77 @@
             const randomRecipe = filtered[randomIndex];
             openRecipe(randomRecipe.id);
         }
+
+        // Generate shareable recipe URL
+        function getRecipeURL() {
+            if (!currentRecipe) return window.location.href;
+            const baseURL = window.location.origin + window.location.pathname;
+            return `${baseURL}?recipe=${currentRecipe.id}`;
+        }
+        
+        // Copy recipe link to clipboard
+        function copyRecipeLink() {
+            const url = getRecipeURL();
+            
+            navigator.clipboard.writeText(url).then(() => {
+                showCopyNotification();
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = url;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showCopyNotification();
+            });
+        }
+        
+        // Show copy notification
+        function showCopyNotification() {
+            const notification = document.createElement('div');
+            notification.className = 'copy-notification';
+            notification.textContent = '✓ Link copied to clipboard!';
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+        
+        // Share on WhatsApp
+        function shareOnWhatsApp() {
+            if (!currentRecipe) return;
+            const url = encodeURIComponent(getRecipeURL());
+            const text = encodeURIComponent(`Check out this recipe: ${currentRecipe.title}\n\n`);
+            window.open(`https://wa.me/?text=${text}${url}`, '_blank');
+        }
+        
+        // Share via Email
+        function shareViaEmail() {
+            if (!currentRecipe) return;
+            const subject = encodeURIComponent(`Recipe: ${currentRecipe.title}`);
+            const body = encodeURIComponent(
+                `I found this great recipe and thought you'd like it!\n\n` +
+                `${currentRecipe.title}\n` +
+                `${currentRecipe.description}\n\n` +
+                `View the full recipe here: ${getRecipeURL()}`
+            );
+            window.location.href = `mailto:?subject=${subject}&body=${body}`;
+        }
+        
+        // Check URL for shared recipe on page load
+        function checkForSharedRecipe() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const recipeId = urlParams.get('recipe');
+            
+            if (recipeId) {
+                const id = parseInt(recipeId);
+                if (recipes.find(r => r.id === id)) {
+                    setTimeout(() => openRecipe(id), 500);
+                }
+            }
+        }
         
         // Render filter buttons (legacy - now hidden)
         function renderFilters() {
@@ -285,8 +362,7 @@
                             <span>👥 ${recipe.servings}</span>
                         </div>
                         <p>${recipe.description}</p>
-                        ${ (Array.isArray(recipe.categories) ? recipe.categories : (recipe.category ? [recipe.category] : []) )
-                            .map(cat => `<span class="recipe-category">${cat}</span>`).join(' ') }
+                        ${recipe.categories.map(cat => `<span class="recipe-category">${cat}</span>`).join(' ')}
                     </div>
                 </div>
             `).join('');
@@ -298,7 +374,7 @@
             if (!recipe) return;
             
             currentRecipe = recipe;
-            currentServingSize = 1;
+            currentServingSize = 4;
             
             document.getElementById('modalImage').src = recipe.image;
             document.getElementById('modalTitle').textContent = recipe.title;
@@ -315,11 +391,23 @@
                 recipe.instructions.map(inst => `<li>${inst}</li>`).join('');
             
             document.getElementById('recipeModal').style.display = 'block';
+
+            // update URL so shared link opens the same recipe
+            try {
+                const newUrl = `${window.location.origin}${window.location.pathname}?recipe=${id}`;
+                window.history.replaceState({}, '', newUrl);
+            } catch (e) {
+                // ignore history errors (file:// etc.)
+            }
         }
         
         // Close modal
         function closeModal() {
             document.getElementById('recipeModal').style.display = 'none';
+            // remove recipe query param from URL
+            try {
+                window.history.replaceState({}, '', window.location.pathname);
+            } catch (e) {}
         }
         
         // Close modal when clicking outside
@@ -346,6 +434,7 @@
             ).join('');
             
             renderRecipes();
+            checkForSharedRecipe();
         }
         
         init();

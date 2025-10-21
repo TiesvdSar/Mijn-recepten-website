@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Recipe Collection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+        }
+        
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .search-bar {
+            background: white;
+            padding: 15px;
+            border-radius: 50px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 10px 20px;
+            border: none;
+            outline: none;
+            font-size: 1.1em;
+            background: transparent;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .filter-controls {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .filter-section {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .filter-section label {
+            font-weight: bold;
+            margin-right: 10px;
+            color: #333;
+        }
+        
+        .filter-section select {
+            padding: 8px 15px;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            background: white;
+            outline: none;
+        }
+        
+        .filter-section select:hover {
+            border-color: #5568d3;
+        }
+        
+        .random-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .random-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        
+        .clear-filters-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .clear-filters-btn:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+        
+        .share-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-top: 2px solid #667eea;
+        }
+        
+        .share-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .share-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .share-btn.copy {
+            background: #667eea;
+            color: white;
+        }
+        
+        .share-btn.facebook {
+            background: #1877f2;
+            color: white;
+        }
+        
+        .share-btn.twitter {
+            background: #1da1f2;
+            color: white;
+        }
+        
+        .share-btn.whatsapp {
+            background: #25d366;
+            color: white;
+        }
+        
+        .share-btn.email {
+            background: #ea4335;
+            color: white;
+        }
+        
+        .copy-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 2000;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .filter-btn {
+            background: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .recipes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .recipe-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .recipe-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+        
+        .recipe-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .recipe-content {
+            padding: 20px;
+        }
+        
+        .recipe-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .recipe-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .recipe-category {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            margin-top: 10px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: white;
+            max-width: 800px;
+            margin: 20px auto;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .modal-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .modal-body {
+            padding: 30px;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5em;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            z-index: 1001;
+        }
+        
+        .close-btn:hover {
+            background: #f0f0f0;
+        }
+        
+        .modal-title {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .modal-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            color: #666;
+        }
+        
+        .section-title {
+            font-size: 1.5em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+        
+        .ingredients-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .ingredients-list li {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .ingredients-list li:before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .serving-adjuster {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .serving-adjuster label {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .serving-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .serving-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .serving-btn:hover {
+            background: #5568d3;
+            transform: scale(1.1);
+        }
+        
+        .serving-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+        
+        .serving-count {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #667eea;
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        .instructions-list {
+            list-style: none;
+            counter-reset: step-counter;
+            padding: 0;
+        }
+        
+        .instructions-list li {
+            counter-increment: step-counter;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            position: relative;
+            padding-left: 60px;
+        }
+        
+        .instructions-list li:before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .no-results {
+            text-align: center;
+            color: white;
+            font-size: 1.5em;
+            padding: 60px 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🍳 My Recipe Collection</h1>
+            <p>Delicious recipes for every occasion</p>
+        </header>
+        
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search recipes...">
+        </div>
+        
+        <div class="filter-controls">
+            <div class="filter-section">
+                <label for="categoryFilter">Category:</label>
+                <select id="categoryFilter" onchange="applyFilters()">
+                    <option value="All">All Categories</option>
+                </select>
+            </div>
+            
+            <div class="filter-section">
+                <label for="timeFilter">Max Cook Time:</label>
+                <select id="timeFilter" onchange="applyFilters()">
+                    <option value="all">Any Time</option>
+                    <option value="15">15 min or less</option>
+                    <option value="30">30 min or less</option>
+                    <option value="60">1 hour or less</option>
+                </select>
+            </div>
+            
+            <div class="filter-section">
+                <label for="servingsFilter">Servings:</label>
+                <select id="servingsFilter" onchange="applyFilters()">
+                    <option value="all">Any Amount</option>
+                    <option value="1-2">1-2 people</option>
+                    <option value="3-4">3-4 people</option>
+                    <option value="5+">5+ people</option>
+                </select>
+            </div>
+            
+            <button class="clear-filters-btn" onclick="clearFilters()">Clear Filters</button>
+            <button class="random-btn" onclick="openRandomRecipe()">🎲 Random Recipe</button>
+        </div>
+        
+        <div class="filters" id="filters"></div>
+        
+        <div class="recipes-grid" id="recipesGrid"></div>
+        
+        <div class="no-results" id="noResults" style="display: none;">
+            No recipes found. Try a different search term or category.
+        </div>
+    </div>
+    
+    <div class="modal" id="recipeModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <img class="modal-image" id="modalImage" src="" alt="">
+            <div class="modal-body">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <div class="modal-meta" id="modalMeta"></div>
+                <p id="modalDescription"></p>
+                
+                <h3 class="section-title">Ingredients</h3>
+                <div class="serving-adjuster">
+                    <label>Servings:</label>
+                    <div class="serving-controls">
+                        <button class="serving-btn" id="decreaseServing" onclick="adjustServings(-1)">−</button>
+                        <span class="serving-count" id="currentServings"></span>
+                        <button class="serving-btn" id="increaseServing" onclick="adjustServings(1)">+</button>
+                    </div>
+                </div>
+                <ul class="ingredients-list" id="modalIngredients"></ul>
+                
+                <h3 class="section-title">Instructions</h3>
+                <ol class="instructions-list" id="modalInstructions"></ol>
+                
+                <div class="share-section">
+                    <div class="share-title">📤 Share this recipe</div>
+                    <div class="share-buttons">
+                        <button class="share-btn copy" onclick="copyRecipeLink()">
+                            📋 Copy Link
+                        </button>
+                        <button class="share-btn facebook" onclick="shareOnFacebook()">
+                            📘 Facebook
+                        </button>
+                        <button class="share-btn twitter" onclick="shareOnTwitter()">
+                            🐦 Twitter
+                        </button>
+                        <button class="share-btn whatsapp" onclick="shareOnWhatsApp()">
+                            💬 WhatsApp
+                        </button>
+                        <button class="share-btn email" onclick="shareViaEmail()">
+                            ✉️ Email
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Recipe data - ADD YOUR RECIPES HERE
+        const recipes = [
+            {
+                id: 1,
+                title: "Classic Spaghetti Carbonara",
+                description: "A creamy Italian pasta dish made with eggs, cheese, and bacon.",
+                categories: ["Italian", "Pasta", "Quick & Easy"],
+                prepTime: "10 min",
+                cookTime: "20 min",
+                servings: 4,
+                image: "",
+                ingredients: [
+                    "400g spaghetti",
+                    "200g pancetta or bacon",
+                    "4 large eggs",
+                    "100g Parmesan cheese, grated",
+                    "Black pepper to taste",
+                    "Salt for pasta water"
+                ],
+                instructions: [
+                    "Bring a large pot of salted water to boil and cook spaghetti according to package directions.",
+                    "While pasta cooks, cut pancetta into small cubes and fry in a large pan until crispy.",
+                    "In a bowl, whisk together eggs and grated Parmesan cheese.",
+                    "Drain pasta, reserving 1 cup of pasta water.",
+                    "Add hot pasta to the pan with pancetta, remove from heat.",
+                    "Quickly stir in egg mixture, adding pasta water gradually until creamy.",
+                    "Season with black pepper and serve immediately with extra Parmesan."
+                ]
+            },
+            {
+                id: 2,
+                title: "Chicken Stir-Fry",
+                description: "Quick and healthy Asian-inspired chicken with vegetables.",
+                categories: ["Asian", "Healthy", "Quick & Easy"],
+                prepTime: "15 min",
+                cookTime: "10 min",
+                servings: 3,
+                image: "",
+                ingredients: [
+                    "500g chicken breast, sliced",
+                    "2 bell peppers, sliced",
+                    "1 broccoli head, cut into florets",
+                    "3 cloves garlic, minced",
+                    "3 tbsp soy sauce",
+                    "2 tbsp oyster sauce",
+                    "1 tbsp sesame oil",
+                    "2 tbsp vegetable oil"
+                ],
+                instructions: [
+                    "Heat vegetable oil in a wok or large pan over high heat.",
+                    "Add chicken and stir-fry until golden and cooked through, about 5 minutes.",
+                    "Remove chicken and set aside.",
+                    "Add garlic, bell peppers, and broccoli to the pan.",
+                    "Stir-fry vegetables for 3-4 minutes until tender-crisp.",
+                    "Return chicken to pan, add soy sauce, oyster sauce, and sesame oil.",
+                    "Toss everything together for 1-2 minutes and serve hot with rice."
+                ]
+            },
+            {
+                id: 3,
+                title: "Chocolate Chip Cookies",
+                description: "Soft and chewy homemade cookies loaded with chocolate chips.",
+                categories: ["Dessert", "Baking"],
+                prepTime: "15 min",
+                cookTime: "12 min",
+                servings: 24,
+                image: "",
+                ingredients: [
+                    "225g butter, softened",
+                    "200g brown sugar",
+                    "100g white sugar",
+                    "2 large eggs",
+                    "2 tsp vanilla extract",
+                    "300g all-purpose flour",
+                    "1 tsp baking soda",
+                    "1 tsp salt",
+                    "300g chocolate chips"
+                ],
+                instructions: [
+                    "Preheat oven to 180°C (350°F) and line baking sheets with parchment paper.",
+                    "Cream together butter and both sugars until light and fluffy.",
+                    "Beat in eggs and vanilla extract.",
+                    "In a separate bowl, whisk together flour, baking soda, and salt.",
+                    "Gradually mix dry ingredients into wet ingredients.",
+                    "Fold in chocolate chips.",
+                    "Drop rounded tablespoons of dough onto prepared baking sheets.",
+                    "Bake for 10-12 minutes until edges are golden. Cool on pan for 5 minutes."
+                ]
+            }
+        ];
+        
+        let currentCategory = 'All';
+        let currentRecipe = null;
+        let currentServingSize = 1;
+        let currentFilters = {
+            category: 'All',
+            maxTime: 'all',
+            servings: 'all',
+            search: ''
+        };
+        
+        // Parse ingredient and scale quantity
+        function scaleIngredient(ingredient, scale) {
+            // Regular expression to find numbers (including fractions and decimals)
+            const numberRegex = /(\d+\.?\d*\/?\d*\.?\d*)/g;
+            
+            return ingredient.replace(numberRegex, function(match) {
+                let value;
+                
+                // Handle fractions like "1/2"
+                if (match.includes('/')) {
+                    const parts = match.split('/');
+                    value = parseFloat(parts[0]) / parseFloat(parts[1]);
+                } else {
+                    value = parseFloat(match);
+                }
+                
+                const scaled = value * scale;
+                
+                // Format the result nicely
+                if (scaled % 1 === 0) {
+                    return scaled.toString();
+                }
+                
+                // Check if it's close to a common fraction
+                const fractions = {
+                    0.25: '¼', 0.33: '⅓', 0.5: '½', 
+                    0.67: '⅔', 0.75: '¾'
+                };
+                
+                const whole = Math.floor(scaled);
+                const decimal = scaled - whole;
+                
+                for (let [dec, frac] of Object.entries(fractions)) {
+                    if (Math.abs(decimal - parseFloat(dec)) < 0.05) {
+                        return whole > 0 ? `${whole} ${frac}` : frac;
+                    }
+                }
+                
+                // Otherwise round to 1 decimal place
+                return scaled.toFixed(1);
+            });
+        }
+        
+        // Adjust serving size
+        function adjustServings(change) {
+            currentServingSize += change;
+            if (currentServingSize < 1) currentServingSize = 1;
+            
+            updateIngredientsDisplay();
+        }
+        
+        // Update ingredients display with scaled quantities
+        function updateIngredientsDisplay() {
+            if (!currentRecipe) return;
+            
+            const scale = currentServingSize / currentRecipe.servings;
+            const scaledServings = currentRecipe.servings * scale;
+            
+            document.getElementById('currentServings').textContent = Math.round(scaledServings);
+            document.getElementById('decreaseServing').disabled = currentServingSize <= 1;
+            
+            const ingredientsList = document.getElementById('modalIngredients');
+            ingredientsList.innerHTML = currentRecipe.ingredients.map(ing => 
+                `<li>${scaleIngredient(ing, scale)}</li>`
+            ).join('');
+        }
+        
+        // Get unique categories
+        function getCategories() {
+            const categories = new Set();
+            recipes.forEach(r => {
+                r.categories.forEach(cat => categories.add(cat));
+            });
+            return ['All', ...Array.from(categories).sort()];
+        }
+        
+        // Parse time string to minutes
+        function parseTimeToMinutes(timeStr) {
+            const match = timeStr.match(/(\d+)\s*min/);
+            return match ? parseInt(match[1]) : 0;
+        }
+        
+        // Apply all filters
+        function applyFilters() {
+            currentFilters.category = document.getElementById('categoryFilter').value;
+            currentFilters.maxTime = document.getElementById('timeFilter').value;
+            currentFilters.servings = document.getElementById('servingsFilter').value;
+            
+            renderRecipes();
+        }
+        
+        // Clear all filters
+        function clearFilters() {
+            currentFilters = {
+                category: 'All',
+                maxTime: 'all',
+                servings: 'all',
+                search: ''
+            };
+            
+            document.getElementById('categoryFilter').value = 'All';
+            document.getElementById('timeFilter').value = 'all';
+            document.getElementById('servingsFilter').value = 'all';
+            document.getElementById('searchInput').value = '';
+            
+            renderRecipes();
+        }
+        
+        // Get filtered recipes
+        function getFilteredRecipes() {
+            return recipes.filter(recipe => {
+                // Category filter
+                const matchesCategory = currentFilters.category === 'All' || 
+                                       recipe.categories.includes(currentFilters.category);
+                
+                // Time filter
+                let matchesTime = true;
+                if (currentFilters.maxTime !== 'all') {
+                    const totalTime = parseTimeToMinutes(recipe.prepTime) + parseTimeToMinutes(recipe.cookTime);
+                    matchesTime = totalTime <= parseInt(currentFilters.maxTime);
+                }
+                
+                // Servings filter
+                let matchesServings = true;
+                if (currentFilters.servings === '1-2') {
+                    matchesServings = recipe.servings >= 1 && recipe.servings <= 2;
+                } else if (currentFilters.servings === '3-4') {
+                    matchesServings = recipe.servings >= 3 && recipe.servings <= 4;
+                } else if (currentFilters.servings === '5+') {
+                    matchesServings = recipe.servings >= 5;
+                }
+                
+                // Search filter
+                const matchesSearch = recipe.title.toLowerCase().includes(currentFilters.search.toLowerCase()) ||
+                                     recipe.description.toLowerCase().includes(currentFilters.search.toLowerCase());
+                
+                return matchesCategory && matchesTime && matchesServings && matchesSearch;
+            });
+        }
+        
+        // Open random recipe
+        function openRandomRecipe() {
+            const filtered = getFilteredRecipes();
+            
+            if (filtered.length === 0) {
+                alert('No recipes match your current filters!');
+                return;
+            }
+            
+            const randomIndex = Math.floor(Math.random() * filtered.length);
+            const randomRecipe = filtered[randomIndex];
+            openRecipe(randomRecipe.id);
+        }
+        
+        // Generate shareable recipe URL
+        function getRecipeURL() {
+            if (!currentRecipe) return window.location.href;
+            const baseURL = window.location.origin + window.location.pathname;
+            return `${baseURL}?recipe=${currentRecipe.id}`;
+        }
+        
+        // Copy recipe link to clipboard
+        function copyRecipeLink() {
+            const url = getRecipeURL();
+            
+            navigator.clipboard.writeText(url).then(() => {
+                showCopyNotification();
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = url;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showCopyNotification();
+            });
+        }
+        
+        // Show copy notification
+        function showCopyNotification() {
+            const notification = document.createElement('div');
+            notification.className = 'copy-notification';
+            notification.textContent = '✓ Link copied to clipboard!';
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+        
+        // Share on Facebook
+        function shareOnFacebook() {
+            const url = encodeURIComponent(getRecipeURL());
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+        
+        // Share on Twitter
+        function shareOnTwitter() {
+            if (!currentRecipe) return;
+            const url = encodeURIComponent(getRecipeURL());
+            const text = encodeURIComponent(`Check out this recipe: ${currentRecipe.title}`);
+            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+        }
+        
+        // Share on WhatsApp
+        function shareOnWhatsApp() {
+            if (!currentRecipe) return;
+            const url = encodeURIComponent(getRecipeURL());
+            const text = encodeURIComponent(`Check out this recipe: ${currentRecipe.title}\n\n`);
+            window.open(`https://wa.me/?text=${text}${url}`, '_blank');
+        }
+        
+        // Share via Email
+        function shareViaEmail() {
+            if (!currentRecipe) return;
+            const subject = encodeURIComponent(`Recipe: ${currentRecipe.title}`);
+            const body = encodeURIComponent(
+                `I found this great recipe and thought you'd like it!\n\n` +
+                `${currentRecipe.title}\n` +
+                `${currentRecipe.description}\n\n` +
+                `View the full recipe here: ${getRecipeURL()}`
+            );
+            window.location.href = `mailto:?subject=${subject}&body=${body}`;
+        }
+        
+        // Check URL for shared recipe on page load
+        function checkForSharedRecipe() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const recipeId = urlParams.get('recipe');
+            
+            if (recipeId) {
+                const id = parseInt(recipeId);
+                if (recipes.find(r => r.id === id)) {
+                    setTimeout(() => openRecipe(id), 500);
+                }
+            }
+        }
+        
+        // Render filter buttons (legacy - now hidden)
+        function renderFilters() {
+            // Category buttons are now replaced by dropdown filter
+            // This function kept for compatibility
+        }
+        
+        // Render recipe cards
+        function renderRecipes() {
+            const grid = document.getElementById('recipesGrid');
+            const noResults = document.getElementById('noResults');
+            
+            const filtered = getFilteredRecipes();
+            
+            if (filtered.length === 0) {
+                grid.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+            
+            grid.style.display = 'grid';
+            noResults.style.display = 'none';
+            
+            grid.innerHTML = filtered.map(recipe => `
+                <div class="recipe-card" onclick="openRecipe(${recipe.id})">
+                    <img class="recipe-image" src="${recipe.image}" alt="${recipe.title}">
+                    <div class="recipe-content">
+                        <h3 class="recipe-title">${recipe.title}</h3>
+                        <div class="recipe-meta">
+                            <span>⏱️ ${recipe.prepTime}</span>
+                            <span>🍳 ${recipe.cookTime}</span>
+                            <span>👥 ${recipe.servings}</span>
+                        </div>
+                        <p>${recipe.description}</p>
+                        ${recipe.categories.map(cat => `<span class="recipe-category">${cat}</span>`).join(' ')}
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Open recipe modal
+        function openRecipe(id) {
+            const recipe = recipes.find(r => r.id === id);
+            if (!recipe) return;
+            
+            currentRecipe = recipe;
+            currentServingSize = 1;
+            
+            document.getElementById('modalImage').src = recipe.image;
+            document.getElementById('modalTitle').textContent = recipe.title;
+            document.getElementById('modalMeta').innerHTML = `
+                <span>⏱️ Prep: ${recipe.prepTime}</span>
+                <span>🍳 Cook: ${recipe.cookTime}</span>
+                <span>👥 Servings: ${recipe.servings}</span>
+            `;
+            document.getElementById('modalDescription').textContent = recipe.description;
+            
+            updateIngredientsDisplay();
+            
+            document.getElementById('modalInstructions').innerHTML = 
+                recipe.instructions.map(inst => `<li>${inst}</li>`).join('');
+            
+            document.getElementById('recipeModal').style.display = 'block';
+        }
+        
+        // Close modal
+        function closeModal() {
+            document.getElementById('recipeModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('recipeModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+        
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            currentFilters.search = e.target.value;
+            renderRecipes();
+        });
+        
+        // Initialize
+        function init() {
+            // Populate category filter
+            const categories = getCategories();
+            const categorySelect = document.getElementById('categoryFilter');
+            categorySelect.innerHTML = categories.map(cat => 
+                `<option value="${cat}">${cat}</option>`
+            ).join('');
+            
+            renderRecipes();
+            checkForSharedRecipe();
+        }
+        
+        init();
+    </script>
+</body>
+</html>

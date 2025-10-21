@@ -45,23 +45,22 @@ const recipes = [
             "800 gram voorgesneden chinese groenten",
             "600 gram shoarma reepjes",
             "400 gram noedels",
-            "1 Chilli peper"
+            "1 Chilli peper",
+            "Ketjap en soja saus"
         ],
         instructions: [
-            "Heat vegetable oil in a wok or large pan over high heat.",
-            "Add chicken and stir-fry until golden and cooked through, about 5 minutes.",
-            "Remove chicken and set aside.",
-            "Add garlic, bell peppers, and broccoli to the pan.",
-            "Stir-fry vegetables for 3-4 minutes until tender-crisp.",
-            "Return chicken to pan, add soy sauce, oyster sauce, and sesame oil.",
-            "Toss everything together for 1-2 minutes and serve hot with rice."
+            "Verhit een wok met wat olie.",
+            "Gooi vervolgens de shoarma in de wok",
+            "Wacht todat de shoarma gaar is, en gooi de voorgesnede groente er bij.",
+            
+
         ]
     },
     {
         id: 3,
         title: "Venkel pasta",
         description: "Soft and chewy homemade cookies loaded with chocolate chips.",
-        categories: "Dessert",
+        categories: ["Dessert"],
         prepTime: "15 min",
         cookTime: "12 min",
         servings: 24,
