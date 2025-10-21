@@ -36,7 +36,7 @@ const recipes = [
         id: 2,
         title: "Shoarma wok",
         description: "Een heel snel en makkelijk gerecht.",
-        categories: ["Aziatisch", "Snel", "Makkelijk"],
+        categories: ["Aziatisch", "Snel", "Makkelijk", "Hoofdgerecht"],
         prepTime: "0 min",
         cookTime: "25 min",
         servings: 4,
@@ -49,42 +49,46 @@ const recipes = [
             "Ketjap en soja saus"
         ],
         instructions: [
-            "Verhit een wok met wat olie.",
+            "Verhit een wok met wat olie en zet een pan met water op voor de noedels.",
             "Gooi vervolgens de shoarma in de wok",
-            "Wacht todat de shoarma gaar is, en gooi de voorgesnede groente er bij.",
-            
-
+            "Wacht todat de shoarma gaar is, en gooi de voorgesnede groente en de chilli peper er bij.",
+            "Als het water kookt in de pan kunnen de noedels in de pan.",
+            "Breng de shoarma en groente op smaak met ketjap en soja saus.",
+            "Wacht todat de noedel en de groenten goed zijn en doe deze vervolgens bij elkaar."
         ]
     },
     {
         id: 3,
         title: "Venkel pasta",
-        description: "Soft and chewy homemade cookies loaded with chocolate chips.",
-        categories: ["Dessert"],
-        prepTime: "15 min",
-        cookTime: "12 min",
-        servings: 24,
+        description: "Een lekere venkel pasta met italieaans gekruiden worst.",
+        categories: ["Hoofdgerecht", "Pasta", "Italiaans"],
+        prepTime: "20 min",
+        cookTime: "35 min",
+        servings: 8,
         image: "",
         ingredients: [
-            "225g butter, softened",
-            "200g brown sugar",
-            "100g white sugar",
-            "2 large eggs",
-            "2 tsp vanilla extract",
-            "300g all-purpose flour",
-            "1 tsp baking soda",
-            "1 tsp salt",
-            "300g chocolate chips"
+            "1 kg Italiaans gebruide braadworstjes",
+            "1.2 kg venkel",
+            "600 gram champignons",
+            "4 middelgrote ui",
+            "6 tenen knoflook",
+            "200 gram creme fraiche",
+            "1 kg fusilli"
         ],
         instructions: [
-            "Preheat oven to 180°C (350°F) and line baking sheets with parchment paper.",
-            "Cream together butter and both sugars until light and fluffy.",
-            "Beat in eggs and vanilla extract.",
-            "In a separate bowl, whisk together flour, baking soda, and salt.",
-            "Gradually mix dry ingredients into wet ingredients.",
-            "Fold in chocolate chips.",
-            "Drop rounded tablespoons of dough onto prepared baking sheets.",
-            "Bake for 10-12 minutes until edges are golden. Cool on pan for 5 minutes."
+            "Snij de venkel, chapignos, ui en knoflook in middel grote stukken.",
+            "Haal vervolgens het velletje van de braadworst waardoor je gehakt overhoud.",
+            "Verwarm een pan op het vuur met een beetje olie.",
+            "Pak een andere pan en vul hem met water voor de pasta, zet deze ook op het vuur",
+            "Voeg alvast wat zout aan het water toe, als dit water kookt kan de pasta er in.",
+            "Fruit de ui en knoflook eerst gaar voordat je de worstjes in de pan bereid.",
+            "Breek de worsten in kleinere stukken met een spatel.",
+            "Als de worst klaar is kan de venkel en champignons er bij.",
+            "Bak dit door totdat de venkel wat zachter is geworden.",
+            "Giet vervolgens de creme fraiche er bij en wat pasta water.",
+            "Als de pasta klaar is kan dit ook door het gerecht heen.",
+            "Breng het vervolgens op smaak met zout en peper, en smullen maar."
+            
         ]
     }
 ];
