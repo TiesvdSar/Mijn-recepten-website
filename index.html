@@ -1,63 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mijn recepten opslag</title>
+    <title>Mijn recepten collectie</title>
     <link rel="stylesheet" href="styles/main_style.css">
 </head>
 <body>
+    <header>
+        <h1>🍽 Mijn recepten collectie</h1>
+        <p>Recepten van vrienden, familie en mezelf — om te delen en altijd bij de hand te hebben.</p>
+    </header>
+
     <div class="container">
-        <header>
-            <h1>🍽 Mijn recepten collectie</h1>
-            <p>Deze recepten zijn van mijn vrienden, familie of van mij zelf om ze te delen met mensen en ze ergens op te slaan.</p>
-        </header>
-        
         <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="Zoek voor recepten...">
+            <input type="text" id="searchInput" placeholder="Zoek een recept...">
         </div>
-        
+
         <div class="filter-controls">
             <div class="filter-section">
-                <label for="categoryFilter">Categorie:</label>
+                <label for="categoryFilter">Categorie</label>
                 <select id="categoryFilter" onchange="applyFilters()">
                     <option value="Alle">Alle</option>
                 </select>
             </div>
-            
+
             <div class="filter-section">
-                <label for="timeFilter">Bereidings tijd:</label>
+                <label for="timeFilter">Bereidingstijd</label>
                 <select id="timeFilter" onchange="applyFilters()">
                     <option value="all">Elke tijd</option>
-                    <option value="15">15 min of minder</option>
-                    <option value="30">30 min of minder</option>
-                    <option value="60">1 uur of minder</option>
+                    <option value="15">≤ 15 min</option>
+                    <option value="30">≤ 30 min</option>
+                    <option value="60">≤ 1 uur</option>
                 </select>
             </div>
-            
+
             <div class="filter-section">
-                <label for="servingsFilter">Aantal personen:</label>
+                <label for="servingsFilter">Personen</label>
                 <select id="servingsFilter" onchange="applyFilters()">
                     <option value="all">Elk aantal</option>
-                    <option value="1-2">1-2 mensen</option>
-                    <option value="3-4">3-4 mensen</option>
-                    <option value="5+">5+ mensen</option>
+                    <option value="1-2">1–2 personen</option>
+                    <option value="3-4">3–4 personen</option>
+                    <option value="5+">5+ personen</option>
                 </select>
             </div>
-            
-            <button class="clear-filters-btn" onclick="clearFilters()">Filters verwijderen</button>
-            <button class="random-btn" onclick="openRandomRecipe()">🎲 Random Recept</button>
+
+            <button class="clear-filters-btn" onclick="clearFilters()">Filters wissen</button>
+            <button class="random-btn" onclick="openRandomRecipe()">🎲 Willekeurig recept</button>
         </div>
-        
+
         <div class="filters" id="filters"></div>
-        
+
         <div class="recipes-grid" id="recipesGrid"></div>
-        
+
         <div class="no-results" id="noResults" style="display: none;">
-            Geen recepten gevonden, proveer iets anders.
+            Geen recepten gevonden. Probeer een andere zoekterm of filter.
         </div>
     </div>
-    
+
+    <!-- Recipe modal -->
     <div class="modal" id="recipeModal">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal()">&times;</button>
@@ -67,15 +68,15 @@
                 <div class="modal-meta" id="modalMeta"></div>
                 <p id="modalDescription"></p>
 
-                <div class="share-buttons" style="margin:10px 0;">
-                    <button onclick="copyRecipeLink()" class="random-btn" title="Kopieer link">🔗 Kopieer link</button>
-                    <button onclick="shareOnWhatsApp()" class="clear-filters-btn" title="Deel op WhatsApp">💬 WhatsApp</button>
+                <div class="share-buttons">
+                    <button onclick="copyRecipeLink()" class="clear-filters-btn" title="Kopieer link">🔗 Kopieer link</button>
+                    <button onclick="shareOnWhatsApp()" class="random-btn" title="Deel op WhatsApp">💬 WhatsApp</button>
                     <button onclick="shareViaEmail()" class="clear-filters-btn" title="Deel via e-mail">✉️ E-mail</button>
                 </div>
-                
-                <h3 class="section-title">Ingredienten</h3>
+
+                <h3 class="section-title">Ingrediënten</h3>
                 <div class="serving-adjuster">
-                    <label>Aantal:</label>
+                    <label>Aantal personen:</label>
                     <div class="serving-controls">
                         <button class="serving-btn" id="decreaseServing" onclick="adjustServings(-1)">−</button>
                         <span class="serving-count" id="currentServings"></span>
@@ -83,94 +84,71 @@
                     </div>
                 </div>
                 <ul class="ingredients-list" id="modalIngredients"></ul>
-                
-                <h3 class="section-title">Stappen</h3>
+
+                <h3 class="section-title">Bereidingswijze</h3>
                 <ol class="instructions-list" id="modalInstructions"></ol>
             </div>
         </div>
     </div>
 
     <script src="recepten.js"></script>
-    
-    <script>     
-        let currentCategory = 'Alle';
+
+    <script>
         let currentRecipe = null;
-        let currentServingSize = 1;
+        let currentServingSize = 4;
         let currentFilters = {
             category: 'Alle',
             maxTime: 'all',
             servings: 'all',
             search: ''
         };
-        
+
         // Parse ingredient and scale quantity
         function scaleIngredient(ingredient, scale) {
-            // Regular expression to find numbers (including fractions and decimals)
             const numberRegex = /(\d+\.?\d*\/?\d*\.?\d*)/g;
-            
+
             return ingredient.replace(numberRegex, function(match) {
                 let value;
-                
-                // Handle fractions like "1/2"
                 if (match.includes('/')) {
                     const parts = match.split('/');
                     value = parseFloat(parts[0]) / parseFloat(parts[1]);
                 } else {
                     value = parseFloat(match);
                 }
-                
+
                 const scaled = value * scale;
-                
-                // Format the result nicely
-                if (scaled % 1 === 0) {
-                    return scaled.toString();
-                }
-                
-                // Check if it's close to a common fraction
-                const fractions = {
-                    0.25: '¼', 0.33: '⅓', 0.5: '½', 
-                    0.67: '⅔', 0.75: '¾'
-                };
-                
+
+                if (scaled % 1 === 0) return scaled.toString();
+
+                const fractions = { 0.25: '¼', 0.33: '⅓', 0.5: '½', 0.67: '⅔', 0.75: '¾' };
                 const whole = Math.floor(scaled);
                 const decimal = scaled - whole;
-                
+
                 for (let [dec, frac] of Object.entries(fractions)) {
                     if (Math.abs(decimal - parseFloat(dec)) < 0.05) {
                         return whole > 0 ? `${whole} ${frac}` : frac;
                     }
                 }
-                
-                // Otherwise round to 1 decimal place
+
                 return scaled.toFixed(1);
             });
         }
-        
-        // Adjust serving size
+
         function adjustServings(change) {
             currentServingSize += change;
             if (currentServingSize < 1) currentServingSize = 1;
-            
             updateIngredientsDisplay();
         }
-        
-        // Update ingredients display with scaled quantities
+
         function updateIngredientsDisplay() {
             if (!currentRecipe) return;
-            
             const scale = currentServingSize / currentRecipe.servings;
-            const scaledServings = currentRecipe.servings * scale;
-            
-            document.getElementById('currentServings').textContent = Math.round(scaledServings);
+            document.getElementById('currentServings').textContent = currentServingSize;
             document.getElementById('decreaseServing').disabled = currentServingSize <= 1;
-            
-            const ingredientsList = document.getElementById('modalIngredients');
-            ingredientsList.innerHTML = currentRecipe.ingredients.map(ing => 
-                `<li>${scaleIngredient(ing, scale)}</li>`
-            ).join('');
+            document.getElementById('modalIngredients').innerHTML = currentRecipe.ingredients
+                .map(ing => `<li>${scaleIngredient(ing, scale)}</li>`).join('');
         }
-        
-        // Get unique categories
+
         function getCategories() {
             const categories = new Set();
             recipes.forEach(r => {
@@ -179,264 +157,206 @@
             });
             return ['Alle', ...Array.from(categories).sort()];
         }
-        
-        // Parse time string to minutes
+
         function parseTimeToMinutes(timeStr) {
             const match = timeStr.match(/(\d+)\s*min/);
             return match ? parseInt(match[1]) : 0;
         }
-        
-        // Apply all filters
+
         function applyFilters() {
             currentFilters.category = document.getElementById('categoryFilter').value;
-            currentFilters.maxTime = document.getElementById('timeFilter').value;
+            currentFilters.maxTime  = document.getElementById('timeFilter').value;
             currentFilters.servings = document.getElementById('servingsFilter').value;
-            
             renderRecipes();
         }
-        
-        // Clear all filters
+
         function clearFilters() {
-            currentFilters = {
-                category: 'Alle',
-                maxTime: 'all',
-                servings: 'all',
-                search: ''
-            };
-            
+            currentFilters = { category: 'Alle', maxTime: 'all', servings: 'all', search: '' };
             document.getElementById('categoryFilter').value = 'Alle';
             document.getElementById('timeFilter').value = 'all';
             document.getElementById('servingsFilter').value = 'all';
             document.getElementById('searchInput').value = '';
-            
             renderRecipes();
         }
-        
-        // Get filtered recipes
+
         function getFilteredRecipes() {
             return recipes.filter(recipe => {
-                // Category filter
                 const matchesCategory = currentFilters.category === 'Alle' ||
-                                       (Array.isArray(recipe.categories) ? recipe.categories.includes(currentFilters.category) : (recipe.category === currentFilters.category));
-                
-                // Time filter
+                    (Array.isArray(recipe.categories)
+                        ? recipe.categories.includes(currentFilters.category)
+                        : recipe.category === currentFilters.category);
+
                 let matchesTime = true;
                 if (currentFilters.maxTime !== 'all') {
-                    const totalTime = parseTimeToMinutes(recipe.prepTime) + parseTimeToMinutes(recipe.cookTime);
-                    matchesTime = totalTime <= parseInt(currentFilters.maxTime);
+                    const total = parseTimeToMinutes(recipe.prepTime) + parseTimeToMinutes(recipe.cookTime);
+                    matchesTime = total <= parseInt(currentFilters.maxTime);
                 }
-                
-                // Servings filter
+
                 let matchesServings = true;
-                if (currentFilters.servings === '1-2') {
-                    matchesServings = recipe.servings >= 1 && recipe.servings <= 2;
-                } else if (currentFilters.servings === '3-4') {
-                    matchesServings = recipe.servings >= 3 && recipe.servings <= 4;
-                } else if (currentFilters.servings === '5+') {
-                    matchesServings = recipe.servings >= 5;
-                }
-                
-                // Search filter
-                const matchesSearch = recipe.title.toLowerCase().includes(currentFilters.search.toLowerCase()) ||
-                                     recipe.description.toLowerCase().includes(currentFilters.search.toLowerCase());
-                
+                if (currentFilters.servings === '1-2')      matchesServings = recipe.servings <= 2;
+                else if (currentFilters.servings === '3-4') matchesServings = recipe.servings >= 3 && recipe.servings <= 4;
+                else if (currentFilters.servings === '5+')  matchesServings = recipe.servings >= 5;
+
+                const matchesSearch =
+                    recipe.title.toLowerCase().includes(currentFilters.search.toLowerCase()) ||
+                    recipe.description.toLowerCase().includes(currentFilters.search.toLowerCase());
+
                 return matchesCategory && matchesTime && matchesServings && matchesSearch;
             });
         }
-        
-        // Open random recipe
+
         function openRandomRecipe() {
             const filtered = getFilteredRecipes();
-            
-            if (filtered.length === 0) {
-                alert('No recipes match your current filters!');
-                return;
-            }
-            
-            const randomIndex = Math.floor(Math.random() * filtered.length);
-            const randomRecipe = filtered[randomIndex];
-            openRecipe(randomRecipe.id);
+            if (filtered.length === 0) { alert('Geen recepten gevonden met de huidige filters!'); return; }
+            openRecipe(filtered[Math.floor(Math.random() * filtered.length)].id);
         }
 
-        // Generate shareable recipe URL
         function getRecipeURL() {
             if (!currentRecipe) return window.location.href;
-            const baseURL = window.location.origin + window.location.pathname;
-            return `${baseURL}?recipe=${currentRecipe.id}`;
+            return `${window.location.origin}${window.location.pathname}?recipe=${currentRecipe.id}`;
         }
-        
-        // Copy recipe link to clipboard
+
         function copyRecipeLink() {
             const url = getRecipeURL();
-            
-            navigator.clipboard.writeText(url).then(() => {
-                showCopyNotification();
-            }).catch(() => {
-                // Fallback for older browsers
-                const textArea = document.createElement('textarea');
-                textArea.value = url;
-                document.body.appendChild(textArea);
-                textArea.select();
+            navigator.clipboard.writeText(url).then(showCopyNotification).catch(() => {
+                const ta = document.createElement('textarea');
+                ta.value = url;
+                document.body.appendChild(ta);
+                ta.select();
                 document.execCommand('copy');
-                document.body.removeChild(textArea);
+                document.body.removeChild(ta);
                 showCopyNotification();
             });
         }
-        
-        // Show copy notification
+
         function showCopyNotification() {
-            const notification = document.createElement('div');
-            notification.className = 'copy-notification';
-            notification.textContent = '✓ Link copied to clipboard!';
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.remove();
-            }, 3000);
+            const n = document.createElement('div');
+            n.className = 'copy-notification';
+            n.textContent = '✓ Link gekopieerd!';
+            document.body.appendChild(n);
+            setTimeout(() => n.remove(), 3000);
         }
-        
-        // Share on WhatsApp
+
         function shareOnWhatsApp() {
             if (!currentRecipe) return;
-            const url = encodeURIComponent(getRecipeURL());
-            const text = encodeURIComponent(`Check out this recipe: ${currentRecipe.title}\n\n`);
+            const url  = encodeURIComponent(getRecipeURL());
+            const text = encodeURIComponent(`Kijk eens naar dit recept: ${currentRecipe.title}\n\n`);
             window.open(`https://wa.me/?text=${text}${url}`, '_blank');
         }
-        
-        // Share via Email
+
         function shareViaEmail() {
             if (!currentRecipe) return;
-            const subject = encodeURIComponent(`Recipe: ${currentRecipe.title}`);
+            const subject = encodeURIComponent(`Recept: ${currentRecipe.title}`);
             const body = encodeURIComponent(
-                `I found this great recipe and thought you'd like it!\n\n` +
-                `${currentRecipe.title}\n` +
-                `${currentRecipe.description}\n\n` +
-                `View the full recipe here: ${getRecipeURL()}`
+                `Ik vond dit recept en dacht dat je het leuk zou vinden!\n\n` +
+                `${currentRecipe.title}\n${currentRecipe.description}\n\n` +
+                `Bekijk het volledige recept hier: ${getRecipeURL()}`
             );
             window.location.href = `mailto:?subject=${subject}&body=${body}`;
         }
-        
-        // Check URL for shared recipe on page load
+
         function checkForSharedRecipe() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const recipeId = urlParams.get('recipe');
-            
-            if (recipeId) {
-                const id = parseInt(recipeId);
-                if (recipes.find(r => r.id === id)) {
-                    setTimeout(() => openRecipe(id), 500);
-                }
-            }
+            const id = parseInt(new URLSearchParams(window.location.search).get('recipe'));
+            if (id && recipes.find(r => r.id === id)) setTimeout(() => openRecipe(id), 500);
         }
-        
-        // Render filter buttons (legacy - now hidden)
-        function renderFilters() {
-            // Category buttons are now replaced by dropdown filter
-            // This function kept for compatibility
-        }
-        
-        // Render recipe cards
+
+        function renderFilters() {}
+
         function renderRecipes() {
-            const grid = document.getElementById('recipesGrid');
+            const grid      = document.getElementById('recipesGrid');
             const noResults = document.getElementById('noResults');
-            
-            const filtered = getFilteredRecipes();
-            
+            const filtered  = getFilteredRecipes();
+
             if (filtered.length === 0) {
                 grid.style.display = 'none';
                 noResults.style.display = 'block';
                 return;
             }
-            
+
             grid.style.display = 'grid';
             noResults.style.display = 'none';
-            
+
             grid.innerHTML = filtered.map(recipe => `
                 <div class="recipe-card" onclick="openRecipe(${recipe.id})">
-                    <img class="recipe-image" src="${recipe.image}" alt="${recipe.title}">
+                    <div class="recipe-image-wrapper">
+                        ${recipe.image
+                            ? `<img class="recipe-image" src="${recipe.image}" alt="${recipe.title}">`
+                            : `<div class="recipe-image-placeholder">🍽️</div>`
+                        }
+                    </div>
                     <div class="recipe-content">
                         <h3 class="recipe-title">${recipe.title}</h3>
                         <div class="recipe-meta">
                             <span>⏱️ ${recipe.prepTime}</span>
                             <span>🍳 ${recipe.cookTime}</span>
-                            <span>👥 ${recipe.servings}</span>
+                            <span>👥 ${recipe.servings} pers.</span>
                         </div>
-                        <p>${recipe.description}</p>
-                        ${recipe.categories.map(cat => `<span class="recipe-category">${cat}</span>`).join(' ')}
+                        <p class="recipe-description">${recipe.description}</p>
+                        <div class="recipe-categories">
+                            ${recipe.categories.map(cat => `<span class="recipe-category">${cat}</span>`).join('')}
+                        </div>
                     </div>
                 </div>
             `).join('');
         }
-        
-        // Open recipe modal
+
         function openRecipe(id) {
             const recipe = recipes.find(r => r.id === id);
             if (!recipe) return;
-            
-            currentRecipe = recipe;
-            currentServingSize = 4;
-            
-            document.getElementById('modalImage').src = recipe.image;
+
+            currentRecipe     = recipe;
+            currentServingSize = recipe.servings;
+
+            const img = document.getElementById('modalImage');
+            if (recipe.image) {
+                img.src   = recipe.image;
+                img.style.display = 'block';
+            } else {
+                img.style.display = 'none';
+            }
+
             document.getElementById('modalTitle').textContent = recipe.title;
             document.getElementById('modalMeta').innerHTML = `
                 <span>⏱️ Voorbereiding: ${recipe.prepTime}</span>
                 <span>🍳 Kooktijd: ${recipe.cookTime}</span>
-                <span>👥 Aantal: ${recipe.servings}</span>
+                <span>👥 ${recipe.servings} personen</span>
             `;
             document.getElementById('modalDescription').textContent = recipe.description;
-            
+
             updateIngredientsDisplay();
-            
-            document.getElementById('modalInstructions').innerHTML = 
+
+            document.getElementById('modalInstructions').innerHTML =
                 recipe.instructions.map(inst => `<li>${inst}</li>`).join('');
-            
+
             document.getElementById('recipeModal').style.display = 'block';
 
-            // update URL so shared link opens the same recipe
             try {
-                const newUrl = `${window.location.origin}${window.location.pathname}?recipe=${id}`;
-                window.history.replaceState({}, '', newUrl);
-            } catch (e) {
-                // ignore history errors (file:// etc.)
-            }
+                window.history.replaceState({}, '', `${window.location.origin}${window.location.pathname}?recipe=${id}`);
+            } catch(e) {}
         }
-        
-        // Close modal
+
         function closeModal() {
             document.getElementById('recipeModal').style.display = 'none';
-            // remove recipe query param from URL
-            try {
-                window.history.replaceState({}, '', window.location.pathname);
-            } catch (e) {}
+            try { window.history.replaceState({}, '', window.location.pathname); } catch(e) {}
         }
-        
-        // Close modal when clicking outside
+
         window.onclick = function(event) {
-            const modal = document.getElementById('recipeModal');
-            if (event.target === modal) {
-                closeModal();
-            }
-        }
-        
-        // Search functionality
+            if (event.target === document.getElementById('recipeModal')) closeModal();
+        };
+
         document.getElementById('searchInput').addEventListener('input', function(e) {
             currentFilters.search = e.target.value;
             renderRecipes();
         });
-        
-        // Initialize
+
         function init() {
-            // Populate category filter
-            const categories = getCategories();
+            const categories   = getCategories();
             const categorySelect = document.getElementById('categoryFilter');
-            categorySelect.innerHTML = categories.map(cat => 
-                `<option value="${cat}">${cat}</option>`
-            ).join('');
-            
+            categorySelect.innerHTML = categories.map(cat => `<option value="${cat}">${cat}</option>`).join('');
             renderRecipes();
             checkForSharedRecipe();
         }
-        
+
         init();
     </script>
 </body>
