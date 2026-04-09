@@ -8,7 +8,7 @@ const recipes = [
         prepTime: "20 min",
         cookTime: "30 min",
         servings: 4,
-        image: "images/chack.jpg",
+        image: "images/Chack.png",
         ingredients: [
             "2 stokbroden",
             "600 gram gehakt",
@@ -39,7 +39,7 @@ const recipes = [
         prepTime: "0 min",
         cookTime: "25 min",
         servings: 4,
-        image: "images/shoarma-wok.jpg",
+        image: "images/Shoarma wok.png",
         ingredients: [
             "800 gram voorgesneden Chinese groenten",
             "600 gram shoarma reepjes",
@@ -64,7 +64,7 @@ const recipes = [
         prepTime: "20 min",
         cookTime: "35 min",
         servings: 8,
-        image: "images/venkel-pasta.jpg",
+        image: "images/Venkel pasta.png",
         ingredients: [
             "1 kg Italiaans gekruide braadworst",
             "1.2 kg venkel",
