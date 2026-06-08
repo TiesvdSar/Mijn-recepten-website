@@ -146,5 +146,37 @@ const recipes = [
         ],
         "image": "images/Oosterse stoofschotel.png",
         "id": 4
+    },
+    {
+        "title": "Parel couscous met courgette",
+        "description": "Een fris en kleurrijk gerecht met parelcouscous, courgette, peultjes, zongedroogde tomaten, olijven en witte kaasblokjes, op smaak gebracht met munt en rodewijnazijn.",
+        "categories": [
+            "Hoofdgerecht",
+            "Vegetarisch",
+            "Couscous",
+            "Mediterraan"
+        ],
+        "prepTime": "15 min",
+        "cookTime": "12 min",
+        "servings": 4,
+        "ingredients": [
+            "2 l kraanwater",
+            "200 g parel couscous",
+            "70 g tomatenpuree",
+            "200 g verse peultjes",
+            "2 courgette",
+            "295 g zongedroogde tomaten in pot",
+            "15 g verse munt",
+            "2 el rodewijnazijn",
+            "165 g groene olijven met knoflook",
+            "2 el (olijf)olie",
+            "200 g witte kaasblokjes met zongedroogde tomaat"
+        ],
+        "instructions": [
+            "Breng het water aan de kook. Voeg de couscous, tomatenpuree en eventueel zout toe en kook in 12 min. gaar. Giet af en laat uitlekken. Doe in een ruime kom. Kook ondertussen de peultjes 4 min. en giet af. Rasp ondertussen de courgettes grof in de keukenmachine of met een rasp. Laat de tomaten uitlekken en halveer. Snijd de muntblaadjes fijn.",
+            "Roer de couscous los met een vork en voeg de courgette, munt en azijn toe. Meng de peultjes, olijven en de olie door de couscous. Laat de kaasblokjes uitlekken en schep er voorzichtig door. Breng op smaak met peper."
+        ],
+        "image": "images/Parel couscous met courgette.png",
+        "id": 5
     }
 ];
