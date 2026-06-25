@@ -178,5 +178,51 @@ const recipes = [
         ],
         "image": "images/Parel couscous met courgette.png",
         "id": 5
+    },
+    {
+        "id": 6,
+        "title": "Bastillakip",
+        "description": "Een Marokkaans taartje van filodeeg gevuld met gestoofd kippenvlees, rozijnen, ingelegde citroen en een laag zoete amandelvulling. Zoet en hartig in één gerecht.",
+        "categories": [
+            "Hoofdgerecht",
+            "Marokkaans",
+            "Kip"
+        ],
+        "prepTime": "30 min",
+        "cookTime": "1 uur 30 min",
+        "servings": 8,
+        "image": "images/bastillakip.jpg",
+        "ingredients": [
+            "Voor de vulling:",
+            "½ bos koriander (15g) – fijngehakt",
+            "½ bos bladpeterselie (15g) – fijngehakt",
+            "1 kg kippendijen, zonder bot",
+            "750 g uienringen",
+            "1 el zonnebloemolie",
+            "3 el gemberpoeder",
+            "1 el kaneelpoeder",
+            "zout, peper",
+            "5 dl kippenbouillon",
+            "1 ingelegde citroen",
+            "100 g rozijnen",
+            "6 eieren",
+            "Voor de notenvulling:",
+            "100 g gebakken amandelen",
+            "70 g suiker",
+            "1 el oranjebloesemwater",
+            "Verder nodig:",
+            "50 g roomboter",
+            "50 ml zonnebloemolie",
+            "1 pak filodeeg, ontdooid",
+            "poedersuiker en kaneel naar smaak"
+        ],
+        "instructions": [
+            "Oven voorverwarmen op 200°C.",
+            "Verhit de zonnebloemolie in je grootste pan. Bak de uienringen op laag vuur goudbruin. Als die grotendeels geslonken zijn gaat de kip erbij; bak die goudbruin mee aan (reken op een minuut of tien). Bestrooi met gemberpoeder, kaneel, zout en peper en bak een minuutje mee. Kippenbouillon erbij, als ook de koriander en peterselie. Deksel op de pan en een uurtje op zacht vuur laten stoven.",
+            "Haal de kippendijen uit de bouillon, zet apart en verhoog het vuur. Laat de bouillon tot de helft inkoken (circa 10-15 minuten). Snijd de schil van de ingelegde citroen in flinterdunne reepjes en voeg, samen met de rozijnen, toe aan de bouillon. Bind de saus door één voor één de eieren erbij te doen en goed te roeren. Laat de saus nog een minuut of 3 doorkoken en daarna helemaal afkoelen. Snijd de kippendijen in dunne reepjes en doe ze bij de saus. (Dit deel kun je ook de dag van tevoren voorbereiden!)",
+            "Notenvulling: gebruik je hele amandelen, rooster die even en maal ze fijn met de suiker. Of meng gemalen amandelen met de suiker en het oranjebloesemwater. Zet apart.",
+            "Smelt de boter en meng met de olie. Smeer een vel filodeeg in met het mengsel en leg er een vel filodeeg bovenop. Smeer ook dat in en schep in het midden de notenvulling, maar laat de randen vrij. Op de notenvulling gaat weer een ingesmeerde laag filodeeg, en daar bovenop het afgekoelde kippenmengsel.",
+            "Vouw de zijkanten van het deeg naar binnen en smeer ze in met het boter/oliemengsel. Draai de bastilla om en leg hem met de gevouwen kant naar beneden op een met bakpapier beklede bakplaat. Bak goudbruin in de oven op 200°C. Bestrooi na het bakken naar smaak met poedersuiker en kaneel."
+        ]
     }
 ];
