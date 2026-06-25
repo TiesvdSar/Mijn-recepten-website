@@ -47,7 +47,7 @@ const recipes = [
         "prepTime": "0 min",
         "cookTime": "25 min",
         "servings": 4,
-        "image": "images/Shoarma wok.png",
+        "image": "images/Shoarma_wok.png",
         "ingredients": [
             "800 gram voorgesneden Chinese groenten",
             "600 gram shoarma reepjes",
@@ -76,7 +76,7 @@ const recipes = [
         "prepTime": "20 min",
         "cookTime": "35 min",
         "servings": 8,
-        "image": "images/Venkel pasta.png",
+        "image": "images/Venkel_pasta.png",
         "ingredients": [
             "1 kg Italiaans gekruide braadworst",
             "1.2 kg venkel",
