@@ -224,5 +224,35 @@ const recipes = [
             "Smelt de boter en meng met de olie. Smeer een vel filodeeg in met het mengsel en leg er een vel filodeeg bovenop. Smeer ook dat in en schep in het midden de notenvulling, maar laat de randen vrij. Op de notenvulling gaat weer een ingesmeerde laag filodeeg, en daar bovenop het afgekoelde kippenmengsel.",
             "Vouw de zijkanten van het deeg naar binnen en smeer ze in met het boter/oliemengsel. Draai de bastilla om en leg hem met de gevouwen kant naar beneden op een met bakpapier beklede bakplaat. Bak goudbruin in de oven op 200°C. Bestrooi na het bakken naar smaak met poedersuiker en kaneel."
         ]
+    },
+    {
+        "id": 7,
+        "title": "Pici with Anchovy & Breadcrumb",
+        "description": "Een Nederlands restaurantgerecht: handgerolde pici pasta met knapperige ansjovis, knoflook, chili en zuurdesem broodkruimels, afgemaakt met pecorino. Lactosevrij. Bereiding ±15 min (exclusief het maken van de pici).",
+        "categories": [
+            "Hoofdgerecht",
+            "Pasta",
+            "Italiaans"
+        ],
+        "prepTime": "15 min",
+        "cookTime": "15 min",
+        "servings": 2,
+        "image": "images/pici-with-anchovy-breadcrumb.jpg",
+        "ingredients": [
+            "2 porties gekookte pici pasta (zie apart pici recept)",
+            "125 ml extra vergine olijfolie",
+            "2 teentjes knoflook, geperst",
+            "8 ansjovisfilets, uitgelekt (verdubbeld per handgeschreven notitie op kaart)",
+            "1 tl chilivlokken",
+            "50 g verse zuurdesem broodkruimels",
+            "30 g pecorino, fijn geraspt, naar smaak"
+        ],
+        "instructions": [
+            "Maak de pici volgens het aparte pici recept.",
+            "Verhit 125 ml extra vergine olijfolie in een grote, diepe koekenpan op middelhoog vuur. Bak de geperste knoflook en ansjovisfilets 4–5 minuten totdat de knoflook lichtgoud en zacht is en de ansjovis is opgelost in de olie.",
+            "Voeg de chilivlokken en verse zuurdesem broodkruimels toe aan de pan. Roerbak circa 5 minuten tot knapperig en diep goudbruin.",
+            "Breng ondertussen een grote pan gezouten water aan de kook (1 tl zout per liter water). Kook de pici 3–4 minuten (afhankelijk van dikte) tot al dente. De pici mag iets stevig zijn, maar mag niet naar meel smaken.",
+            "Giet de pasta af, laat kort uitlekken en schep door het ansjovis-knoflookmengsel. Bestrooi met pecorino en serveer direct."
+        ]
     }
 ];
