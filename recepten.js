@@ -254,5 +254,41 @@ const recipes = [
             "Breng ondertussen een grote pan gezouten water aan de kook (1 tl zout per liter water). Kook de pici 3–4 minuten (afhankelijk van dikte) tot al dente. De pici mag iets stevig zijn, maar mag niet naar meel smaken.",
             "Giet de pasta af, laat kort uitlekken en schep door het ansjovis-knoflookmengsel. Bestrooi met pecorino en serveer direct."
         ]
+    },
+    {
+        "id": 8,
+        "title": "Vegan linzenstoof met aubergine",
+        "description": "Een romige vegan stoofschotel met gebakken aubergine, rode ui, zongedroogde tomaten, linzen, cannellini bonen en olijven. Vol van smaak en zonder vlees op tafel binnen 50 minuten.",
+        "categories": [
+            "Hoofdgerecht",
+            "Vegetarisch",
+            "Vegan",
+            "Stoofschotel"
+        ],
+        "prepTime": "15 min",
+        "cookTime": "35 min",
+        "servings": 4,
+        "image": "images/vegan-linzenstoof-met-aubergine.svg",
+        "ingredients": [
+            "3 aubergines",
+            "2 takjes rozemarijn",
+            "3 rode uien",
+            "10 zongedroogde tomaten",
+            "4 el olijfolie",
+            "2 el gedroogde oregano",
+            "3 el balsamicoazijn",
+            "2 blikken pomodorini tomaatjes (tomaatjes uit blik van 400 g per stuk)",
+            "200 g linzen, uit blik",
+            "175 g cannellini bonen, uit blik",
+            "30 g groene olijven zonder pit",
+            "Peper en zout"
+        ],
+        "instructions": [
+            "Snijd de aubergines in de lengte in dikke plakken van ca. 1 centimeter dik en daarna in repen van ca. 1 centimeter dik. Ris de naaldjes van de rozemarijntakjes en hak ze fijn. Haal de schil van de uien en snijd in parten. Hak de zongedroogde tomaatjes in stukjes.",
+            "Verhit een scheutje olijfolie (2 eetlepels) in een stoofpan. Bak de auberginerepen in ongeveer 3 minuten op hoog vuur rondom bruin, bestrooi ze met oregano en bak ze nog 1 minuut. Haal ze uit de pan en leg ze op een bord. (Misschien moet je dit in 2-3 fasen doen omdat je pan te klein is om alles in 1x te doen)",
+            "Verhit opnieuw 2 eetlepels olijfolie in de stoofpan, zet het vuur lager en bak de ui samen met de rozemarijn 2-3 minuten rondom bruin. Doe de aubergines terug in de pan en schep de balsamicoazijn erdoorheen. Roer de tomaten uit blik en stukjes zongedroogde erdoorheen, breng op smaak met peper en zout en laat 20 minuten met het deksel op de pan op middelhoog vuur stoven. Roer af en toe door. Haal de laatste 5 minuten het deksel van de pan zodat de stoof iets inkookt.",
+            "Giet en spoel de linzen en cannellini bonen af in een vergiet. Laat ze goed uitlekken. Roer ze samen met de olijven door de stoof en warm ze 3-4 minuten mee. Verdeel de linzenstoof over de borden en serveer meteen.",
+            "Tip: lekker met knapperig gebakken brood, zoals ciabatta, of met rijst. Gebruik de olie van de zongedroogde tomaten om de aubergines en ui in te bakken voor extra smaak."
+        ]
     }
 ];
