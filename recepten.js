@@ -322,5 +322,39 @@ const recipes = [
             "Wacht totdat de aardappelen gaar zijn. Test dit door een aardappel eruit te halen: als hij goed zacht van binnen is, zijn ze gaar.",
             "Gooi vervolgens alles in een pan en ga stampen."
         ]
+    },
+    {
+        "id": 10,
+        "title": "Falafel wraps met tzatziki",
+        "description": "Libanese wraps gevuld met geroosterde courgette, aubergine en puntpaprika, krokante kikkererwten uit de airfryer, zelfgemaakte tzatziki en een scheutje crispy chili oil. Recept van Ties.",
+        "categories": [
+            "Hoofdgerecht",
+            "Vegetarisch",
+            "Wraps"
+        ],
+        "prepTime": "15 min",
+        "cookTime": "30 min",
+        "servings": 4,
+        "image": "images/falafel-wraps-met-tzatziki.svg",
+        "ingredients": [
+            "2 courgettes",
+            "2 aubergines",
+            "1 komkommer",
+            "1 grote zak puntpaprika's",
+            "400 ml Griekse yoghurt",
+            "1 blik kikkererwten (ca. 400 g)",
+            "2 teentjes knoflook",
+            "Olijfolie, zout en peper",
+            "Paprikapoeder",
+            "Crispy chili oil",
+            "2-3 Libanese wraps per persoon"
+        ],
+        "instructions": [
+            "Laat de kikkererwten uitlekken en dep ze droog. Meng ze met een beetje olie en paprikapoeder en bak ze in de airfryer in 15-20 minuten krokant op 200 °C. Schud ze af en toe om.",
+            "Verwarm de oven voor op 180 °C. Snijd de courgettes, paprika's en aubergines in lange, dunne repen en leg ze op een bakplaat. Besprenkel ze met olie, breng op smaak met zout en peper en rooster ze 20-30 minuten in de oven. Schep ze af en toe om.",
+            "Maak intussen de tzatziki: rasp de komkommer, knijp het vocht eruit en meng met de Griekse yoghurt en de geperste knoflook. Breng op smaak met zout en peper.",
+            "Doe de geroosterde groenten in een schaal en meng ze met een scheutje crispy chili oil.",
+            "Verwarm de wraps kort en vul ze met de groenten, de kikkererwten en de tzatziki. Eetsmakelijk!"
+        ]
     }
 ];
