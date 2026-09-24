@@ -290,5 +290,37 @@ const recipes = [
             "Giet en spoel de linzen en cannellini bonen af in een vergiet. Laat ze goed uitlekken. Roer ze samen met de olijven door de stoof en warm ze 3-4 minuten mee. Verdeel de linzenstoof over de borden en serveer meteen.",
             "Tip: lekker met knapperig gebakken brood, zoals ciabatta, of met rijst. Gebruik de olie van de zongedroogde tomaten om de aubergines en ui in te bakken voor extra smaak."
         ]
+    },
+    {
+        "id": 9,
+        "title": "Zuurkool stamppot",
+        "description": "Stevige Hollandse zuurkoolstamppot met kruimige aardappelen, gekruid gehakt, chilipeper en rookworst. Recept van Ties.",
+        "categories": [
+            "Hoofdgerecht",
+            "Hollands",
+            "Stamppot"
+        ],
+        "prepTime": "15 min",
+        "cookTime": "25 min",
+        "servings": 5,
+        "image": "images/zuurkool-stamppot.svg",
+        "ingredients": [
+            "2 kilo aardappelen, kruimelig",
+            "1 kilo zuurkool",
+            "500 gr gehakt",
+            "2 chilipepers",
+            "2 uien",
+            "Knoflook",
+            "2 rookworsten"
+        ],
+        "instructions": [
+            "Schil de aardappelen.",
+            "Kook de aardappelen en stoom de zuurkool.",
+            "Als die opstaan, gooi de helft van de ui in een pan.",
+            "Als die gefruit is, gooi de knoflook en het gehakt erbij en kruid het gehakt naar smaak.",
+            "Snijd de chilipeper.",
+            "Wacht totdat de aardappelen gaar zijn. Test dit door een aardappel eruit te halen: als hij goed zacht van binnen is, zijn ze gaar.",
+            "Gooi vervolgens alles in een pan en ga stampen."
+        ]
     }
 ];
