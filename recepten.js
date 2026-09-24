@@ -356,5 +356,47 @@ const recipes = [
             "Doe de geroosterde groenten in een schaal en meng ze met een scheutje crispy chili oil.",
             "Verwarm de wraps kort en vul ze met de groenten, de kikkererwten en de tzatziki. Eetsmakelijk!"
         ]
+    },
+    {
+        "id": 11,
+        "title": "Roti à la Ties",
+        "description": "Surinaamse roti met kip, aardappel en boontjes uit één pan, met een hardgekookt ei erbovenop en rotivellen ernaast. Recept van Ties.",
+        "categories": [
+            "Hoofdgerecht",
+            "Surinaams",
+            "Kip"
+        ],
+        "prepTime": "45 min",
+        "cookTime": "40 min",
+        "servings": 4,
+        "image": "images/roti-a-la-ties.svg",
+        "ingredients": [
+            "800 gram aardappelen",
+            "800 gram boontjes (kousenband)",
+            "700 gram kipdijfilet",
+            "4 eieren (1 per persoon)",
+            "2 uien",
+            "5 teentjes knoflook",
+            "500 gram tomaten",
+            "50 gram tomatenpuree",
+            "2 bouillonblokjes",
+            "Ruim roti kruiden (masala)",
+            "Zout, peper en chili naar smaak",
+            "3–4 rotivellen per persoon (of wraps als je dat te duur vindt)"
+        ],
+        "instructions": [
+            "Snijd de kip in stukjes en meng met 1 eetlepel roti kruiden, 1 geperst teentje knoflook, zout en peper. Laat minimaal 30 minuten marineren.",
+            "Schil de aardappelen en snijd ze in blokjes van ca. 3 cm, zodat ze in de pan gaar kunnen stoven.",
+            "Snipper de uien, hak de rest van de knoflook fijn en snijd de tomaten in blokjes. Snijd de boontjes in stukken van ca. 4 cm.",
+            "Verhit een scheut olie in een grote pan en fruit de ui in 5 minuten glazig. Voeg de knoflook en 2–3 eetlepels roti kruiden toe en bak 1 minuut mee.",
+            "Voeg de kip toe en bak deze rondom bruin.",
+            "Voeg de aardappelen, tomaten, tomatenpuree, verkruimelde bouillonblokjes en ca. 600 ml water toe. Roer goed door en laat 20 minuten zachtjes stoven met de deksel op de pan.",
+            "Kook ondertussen in een aparte pan de eieren in 8–10 minuten hard. Laat ze schrikken onder koud water en pel ze.",
+            "Voeg de boontjes toe en laat nog 10–15 minuten meestoven tot de boontjes gaar maar nog wat stevig zijn en de aardappelen zacht. Voeg eventueel een scheutje water toe als de saus te dik wordt.",
+            "Breng op smaak met zout, peper en chili.",
+            "Verwarm de rotivellen kort in de magnetron onder een vochtige theedoek (ca. 1 minuut), zo heb je geen extra pan nodig.",
+            "Serveer direct uit de pan met ruim saus, een gehalveerd ei per persoon erbovenop en de rotivellen ernaast.",
+            "Tip: lekker met zuurgoed of sambal erbij."
+        ]
     }
 ];
