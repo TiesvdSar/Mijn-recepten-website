@@ -398,5 +398,49 @@ const recipes = [
             "Serveer direct uit de pan met ruim saus, een gehalveerd ei per persoon erbovenop en de rotivellen ernaast.",
             "Tip: lekker met zuurgoed of sambal erbij."
         ]
+    },
+    {
+        "id": 12,
+        "title": "Tofu taco's",
+        "description": "Maistortilla's gevuld met geroosterde, gerookte tofu in zelfgemaakte barbecuesaus, frisse avocado-maissalsa en gepekelde rode ui. Recept van Ties.",
+        "categories": [
+            "Hoofdgerecht",
+            "Vegetarisch",
+            "Vegan",
+            "Mexicaans"
+        ],
+        "prepTime": "15 min",
+        "cookTime": "30 min",
+        "servings": 4,
+        "image": "images/tofu-tacos.svg",
+        "ingredients": [
+            "400 gram gerookte tofu",
+            "8 kleine maistortilla's",
+            "1 limoen (sap en rasp)",
+            "1 rode ui, in dunne ringen (om te pekelen)",
+            "1 avocado",
+            "300 gram maiskorrels",
+            "1 el appelazijn (voor de ui)",
+            "3 el olijfolie",
+            "½ tl zout",
+            "¼ tl peper",
+            "4 el ketchup",
+            "1 el appelazijn (voor de saus)",
+            "1 tl komijn",
+            "1 tl paprikapoeder",
+            "1 rode ui, in dunne ringen (voor de saus)",
+            "1 teentje knoflook"
+        ],
+        "instructions": [
+            "Verwarm de oven voor op 180 °C.",
+            "Rasp de gerookte tofu grof, verdeel over een bakplaat met bakpapier, besprenkel met een scheutje van de olijfolie en rooster 20 minuten. Schep halverwege om.",
+            "Fruit de knoflook en de rode ui voor de saus in een scheutje olijfolie met een snufje zout op middelhoog vuur tot ze zacht en licht gekleurd zijn.",
+            "Voeg de ketchup, peper, 1 el appelazijn, komijn en paprikapoeder toe. Laat 7–10 minuten op laag vuur sudderen tot de saus iets is ingedikt.",
+            "Meng de andere rode ui met 1 el appelazijn en een snufje zout. Masseer met je handen zodat de ui de azijn opneemt en zet apart.",
+            "Snijd de avocado in blokjes en meng met het sap en de rasp van de limoen en de maiskorrels tot een salsa.",
+            "Voeg de geroosterde tofu toe aan de barbecuesaus en verwarm nog 5 minuten op middelhoog vuur.",
+            "Warm de tortilla's kort op in een droge pan of in de magnetron.",
+            "Vul de tortilla's met de tofu, dan de salsa, en werk af met de gepekelde ui. Vouw dubbel en serveer meteen."
+        ]
     }
 ];
