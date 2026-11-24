@@ -442,5 +442,56 @@ const recipes = [
             "Warm de tortilla's kort op in een droge pan of in de magnetron.",
             "Vul de tortilla's met de tofu, dan de salsa, en werk af met de gepekelde ui. Vouw dubbel en serveer meteen."
         ]
+    },
+    {
+        "id": 13,
+        "title": "Turks brood met gehakt",
+        "description": "Knapperig Turks brood gevuld met gekruid gehakt, gemarineerde rode kool, frisse tomatensalade en zelfgemaakte tzatziki. Recept van Ties.",
+        "categories": [
+            "Hoofdgerecht",
+            "Gehakt",
+            "Turks"
+        ],
+        "prepTime": "25 min",
+        "cookTime": "20 min",
+        "servings": 4,
+        "image": "images/turks-brood-met-gehakt.svg",
+        "ingredients": [
+            "1 Turks brood (groot)",
+            "500 gram rundergehakt (of half lams-, half rundergehakt)",
+            "1 ui, fijngesnipperd",
+            "2 knoflookteentjes, fijngehakt (voor het gehakt)",
+            "1 el tomatenpuree",
+            "1 tl gemalen komijn",
+            "1 tl zoete paprikapoeder",
+            "1 tl pul biber of chilivlokken",
+            "¼ tl kaneel",
+            "1 tl zout (voor het gehakt)",
+            "1 el olijfolie (voor het bakken)",
+            "300 gram rode kool, heel fijn gesneden",
+            "1 el rode wijnazijn",
+            "½ tl zout (voor de kool)",
+            "400 gram Griekse yoghurt (10% vet)",
+            "½ komkommer",
+            "1 knoflookteentje, geraspt (voor de tzatziki)",
+            "1 el citroensap (voor de tzatziki)",
+            "1 el verse munt of dille, fijngehakt",
+            "4 stevige tomaten",
+            "1 rode ui, in dunne halve ringen",
+            "30 gram verse platte peterselie, fijngehakt",
+            "1 tl sumak (optioneel)",
+            "1 el citroensap (voor de salade)",
+            "3 el olijfolie (voor salade en tzatziki)"
+        ],
+        "instructions": [
+            "Meng de rode kool met de rode wijnazijn en ½ tl zout. Kneed de kool 1 minuut met je handen tot hij iets slap wordt en laat hem staan (ca. 20 minuten) terwijl je de rest maakt.",
+            "Rasp de komkommer grof, meng met een snufje zout en laat 10 minuten in een zeef staan. Knijp daarna al het vocht er goed uit (dit voorkomt waterige tzatziki).",
+            "Meng de Griekse yoghurt met de uitgeknepen komkommer, het geraspte knoflookteentje, 1 el citroensap, de munt of dille, 1 el van de olijfolie en zout naar smaak. Zet koud weg.",
+            "Snijd de tomaten in kleine blokjes (zaadlijsten eventueel eruit voor minder vocht). Meng met de rode ui, peterselie, sumak (optioneel), 1 el citroensap, 2 el olijfolie en zout. Pas vlak voor serveren zouten.",
+            "Verhit 1 el olijfolie in een ruime pan op hoog vuur. Bak de gesnipperde ui 3 minuten zacht, voeg het gehakt toe en bak rul en goed bruin, ca. 8 minuten (niet te veel roeren, dan krijg je meer smaak).",
+            "Voeg de fijngehakte knoflook, tomatenpuree, komijn, paprikapoeder, pul biber of chilivlokken, kaneel en 1 tl zout toe. Bak nog 2 minuten mee en proef op zout.",
+            "Verwarm het Turks brood 5–6 minuten in een voorverwarmde oven op 200 °C tot het knapperig is. Snijd in stukken en open ze als een zakje.",
+            "Smeer tzatziki in het brood, vul met gehakt, rode kool en salade, en eindig met nog een lepel tzatziki."
+        ]
     }
 ];
